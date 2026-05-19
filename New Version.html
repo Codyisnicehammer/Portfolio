@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miguel Jackson — Business Analytics</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mona+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #000;
+      color: #e8e8e8;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════════════
+       GLOSSY NAV BAR — 2007 Apple
+    ═══════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 44px;
+      background: linear-gradient(180deg,
+        #6b6b6b 0%,
+        #4a4a4a 45%,
+        #3a3a3a 46%,
+        #2a2a2a 100%
+      );
+      border-bottom: 1px solid #111;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset, 0 2px 8px rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.18) 0%,
+        rgba(255,255,255,0.06) 49%,
+        rgba(0,0,0,0) 50%
+      );
+      pointer-events: none;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      max-width: 980px;
+      padding: 0 1rem;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      color: #f0f0f0;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .nav-logo strong { font-weight: 700; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0;
+    }
+
+    .nav-links a {
+      display: block;
+      color: #d8d8d8;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      padding: 0 13px;
+      height: 44px;
+      line-height: 44px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.9);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      border-left: 1px solid rgba(0,0,0,0.3);
+      transition: color 0.15s;
+    }
+
+    .nav-links li:first-child a { border-left: none; }
+    .nav-links a:hover { color: #fff; }
+
+    /* ═══════════════════════════════
+       HERO — Black stage + glow
+    ═══════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 40%, rgba(60,80,120,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 50% 60%, rgba(20,40,80,0.4) 0%, transparent 60%),
+        linear-gradient(180deg, #0e1520 0%, #050810 50%, #000 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* star field */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 8%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 5%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 18%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 35%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 50%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 48% 12%, rgba(200,220,255,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 22% 22%, rgba(200,220,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 70% 45%, rgba(200,220,255,0.6) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-tagline {
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7ab3e0;
+      margin-bottom: 18px;
+      font-weight: 400;
+      text-shadow: 0 0 20px rgba(100,160,220,0.6);
+    }
+
+    #hero h1 {
+      font-size: 56px;
+      font-weight: 300;
+      letter-spacing: -2px;
+      color: #fff;
+      text-shadow:
+        0 0 80px rgba(120,170,240,0.5),
+        0 2px 4px rgba(0,0,0,0.8);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+
+    #hero h1 strong {
+      font-weight: 700;
+      background: linear-gradient(180deg, #ffffff 30%, #a0c0e0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 22px;
+      font-weight: 300;
+      color: #8db8d8;
+      margin-bottom: 32px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    .hero-summary {
+      max-width: 540px;
+      color: #9aa8b8;
+      font-size: 14px;
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    /* Aqua glossy button */
+    .btn-aqua {
+      display: inline-block;
+      padding: 0;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 0 6px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.5);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.3) inset,
+        0 4px 12px rgba(0,0,0,0.6),
+        0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .btn-aqua span {
+      display: block;
+      padding: 9px 26px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-aqua::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: rgba(255,255,255,0.22);
+      border-radius: 14px 14px 0 0;
+      z-index: 1;
+    }
+
+    .btn-blue {
+      background: linear-gradient(180deg,
+        #5b9bd5 0%,
+        #3a7bbf 45%,
+        #2a68a8 46%,
+        #1e5490 100%
+      );
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    }
+
+    .btn-blue:hover {
+      background: linear-gradient(180deg,
+        #6aaae0 0%,
+        #4a8ece 45%,
+        #3a7ab8 46%,
+        #2e64a0 100%
+      );
+    }
+
+    .btn-dark {
+      background: linear-gradient(180deg,
+        #666 0%,
+        #444 45%,
+        #383838 46%,
+        #282828 100%
+      );
+      color: #e8e8e8;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.8);
+    }
+
+    .btn-dark:hover {
+      background: linear-gradient(180deg,
+        #777 0%,
+        #555 45%,
+        #484848 46%,
+        #383838 100%
+      );
+    }
+
+    /* stats shelf */
+    .stats-shelf {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 52px;
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .stat-cell {
+      flex: 1;
+      text-align: center;
+      padding: 20px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-right: none;
+      position: relative;
+    }
+
+    .stat-cell:first-child { border-radius: 10px 0 0 10px; }
+    .stat-cell:last-child  { border-radius: 0 10px 10px 0; border-right: 1px solid rgba(255,255,255,0.1); }
+
+    .stat-cell::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 50%);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #fff;
+      text-shadow: 0 0 24px rgba(120,180,240,0.6);
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      color: #7a9ab0;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* ═══════════════════════════════
+       PAGE SECTIONS
+    ═══════════════════════════════ */
+
+    /* alternating dark/slightly-less-dark rows */
+    .row {
+      width: 100%;
+      padding: 64px 0;
+    }
+
+    .row-dark {
+      background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+      border-top: 1px solid #1e1e1e;
+      border-bottom: 1px solid #222;
+    }
+
+    .row-darker {
+      background: #000;
+      border-top: 1px solid #181818;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .row-blue {
+      background: linear-gradient(180deg, #071420 0%, #0a1c30 50%, #07121e 100%);
+      border-top: 1px solid #0d2a45;
+      border-bottom: 1px solid #0a1e30;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* section label + title */
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #5a8bac;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .section-h2 {
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: -1px;
+      color: #f0f0f0;
+      margin-bottom: 8px;
+    }
+
+    .section-h2 strong { font-weight: 700; }
+
+    .section-lead {
+      font-size: 14px;
+      color: #7a8a98;
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    /* ── Brushed metal divider line ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255,255,255,0.12) 20%,
+        rgba(255,255,255,0.18) 50%,
+        rgba(255,255,255,0.12) 80%,
+        transparent 100%
+      );
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════
+       ABOUT — linen text block
+    ═══════════════════════════════ */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: #8a9aaa;
+      font-size: 14px;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .about-text strong { color: #d8d8d8; font-weight: 600; }
+
+    .about-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .highlight-pill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #c8d8e8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-pill::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px 10px 0 0;
+    }
+
+    .pill-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .pill-text strong { display: block; font-size: 13px; color: #e8e8e8; }
+    .pill-text span   { font-size: 12px; color: #6a8a9a; }
+
+    /* ═══════════════════════════════
+       EXPERIENCE — glossy cards
+    ═══════════════════════════════ */
+    .exp-card {
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.06) 0%,
+        rgba(255,255,255,0.02) 100%
+      );
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(255,255,255,0.25) 30%,
+        rgba(255,255,255,0.25) 70%,
+        transparent
+      );
+    }
+
+    .exp-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+      pointer-events: none;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .exp-card:hover { border-color: rgba(90,160,220,0.4); }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .exp-role {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #f0f0f0;
+    }
+
+    .exp-date {
+      font-size: 11px;
+      color: #5a8aaa;
+      font-weight: 400;
+      background: rgba(40,80,120,0.3);
+      border: 1px solid rgba(60,120,180,0.3);
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-top: 3px;
+    }
+
+    .exp-company {
+      font-size: 13px;
+      color: #5aaddd;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .exp-location {
+      font-size: 11px;
+      color: #4a6a80;
+      margin-bottom: 16px;
+    }
+
+    .exp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .exp-list li {
+      font-size: 13px;
+      color: #7a9aaa;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.55;
+    }
+
+    .exp-list li::before {
+      content: '•';
+      position: absolute;
+      left: 4px;
+      color: #3a8aaa;
+    }
+
+    .exp-list li strong { color: #d0e0ec; }
+
+    .exp-sublabel {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #5a8a9a;
+      margin: 14px 0 6px 16px;
+    }
+
+    /* ═══════════════════════════════
+       SKILLS — brushed columns
+    ═══════════════════════════════ */
+    .skills-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .skill-col {
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.05) 0%,
+        rgba(255,255,255,0.02) 100%
+      );
+      padding: 28px 20px;
+      position: relative;
+    }
+
+    .skill-col::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+
+    .skill-col + .skill-col {
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .skill-col-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #5a8aac;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-tag {
+      font-size: 12px;
+      color: #a0b8c8;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 4px 10px;
+      transition: all 0.15s;
+    }
+
+    .skill-tag:hover {
+      background: rgba(80,140,200,0.2);
+      border-color: rgba(80,140,200,0.4);
+      color: #c8e0f0;
+    }
+
+    /* ═══════════════════════════════
+       PROJECTS — 2x2 grid tiles
+    ═══════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .proj-tile {
+      background: linear-gradient(145deg,
+        rgba(255,255,255,0.05) 0%,
+        rgba(255,255,255,0.02) 100%
+      );
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .proj-tile:nth-child(2n)   { border-right: none; }
+    .proj-tile:nth-last-child(-n+2) { border-bottom: none; }
+
+    .proj-tile::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+
+    .proj-tile:hover {
+      background: linear-gradient(145deg,
+        rgba(60,120,200,0.12) 0%,
+        rgba(30,70,120,0.08) 100%
+      );
+    }
+
+    .proj-glyph {
+      font-size: 32px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .proj-name {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #e8e8e8;
+      margin-bottom: 8px;
+    }
+
+    .proj-desc {
+      font-size: 13px;
+      color: #6a8a9a;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════
+       RESEARCH
+    ═══════════════════════════════ */
+    .research-card {
+      background: linear-gradient(160deg,
+        rgba(20,50,90,0.5) 0%,
+        rgba(10,25,50,0.4) 100%
+      );
+      border: 1px solid rgba(60,120,200,0.25);
+      border-radius: 14px;
+      padding: 36px 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(100,180,255,0.4) 30%,
+        rgba(100,180,255,0.4) 70%,
+        transparent
+      );
+    }
+
+    .research-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+      pointer-events: none;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .research-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #f0a030;
+      background: rgba(240,160,48,0.12);
+      border: 1px solid rgba(240,160,48,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 18px;
+    }
+
+    .research-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #f0a030;
+      box-shadow: 0 0 6px #f0a030;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .research-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #f0f0f0;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .research-subtitle {
+      font-size: 13px;
+      color: #5aaddd;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
+    .research-abstract {
+      font-size: 13px;
+      color: #7a9aaa;
+      line-height: 1.7;
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+
+    .research-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px;
+    }
+
+    .research-col {
+      background: rgba(0,0,0,0.3);
+      padding: 18px 16px;
+      position: relative;
+    }
+
+    .research-col + .research-col {
+      border-left: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .research-col::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: rgba(255,255,255,0.02);
+      pointer-events: none;
+    }
+
+    .rc-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #3a7aaa;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .rc-value {
+      font-size: 12px;
+      color: #a0c0d8;
+      line-height: 1.5;
+    }
+
+    .research-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .method-tag {
+      font-size: 12px;
+      color: #7ab8d8;
+      background: rgba(40,100,160,0.2);
+      border: 1px solid rgba(60,140,200,0.25);
+      border-radius: 6px;
+      padding: 4px 10px;
+    }
+
+    .eq-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(60,120,180,0.2);
+      border-left: 3px solid #3a8acc;
+      border-radius: 6px;
+      padding: 14px 20px;
+      margin-top: 10px;
+    }
+
+    .eq-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #3a7aaa;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .eq-render {
+      display: flex;
+      justify-content: center;
+      filter: brightness(1.15);
+    }
+
+    .eq-render .katex {
+      color: #c8e8ff;
+      font-size: 1.25em;
+    }
+
+    /* ═══════════════════════════════
+       EDUCATION — two up
+    ═══════════════════════════════ */
+    .edu-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .edu-block {
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.05) 0%,
+        rgba(255,255,255,0.02) 100%
+      );
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .edu-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2a6aaa, #5aaddd);
+    }
+
+    .edu-block + .edu-block {
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .edu-deg  { font-size: 16px; font-weight: 700; color: #e8e8e8; margin-bottom: 6px; letter-spacing: -0.3px; }
+    .edu-sch  { font-size: 13px; color: #5aaddd; font-weight: 500; margin-bottom: 4px; }
+    .edu-meta { font-size: 12px; color: #4a6a80; }
+
+    /* ═══════════════════════════════
+       CONTACT — centered stage
+    ═══════════════════════════════ */
+    #contact-row {
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 50%, rgba(20,50,90,0.5) 0%, transparent 70%),
+        #000;
+      border-top: 1px solid #181818;
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.07) 0%,
+        rgba(255,255,255,0.03) 100%
+      );
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 10px;
+      padding: 14px 20px;
+      text-decoration: none;
+      color: #c8d8e8;
+      font-size: 13px;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px 10px 0 0;
+      pointer-events: none;
+    }
+
+    .contact-card:hover {
+      border-color: rgba(80,160,220,0.5);
+      color: #90d0f0;
+    }
+
+    .contact-card svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      background: #000;
+      border-top: 1px solid #1a1a1a;
+      padding: 20px 0;
+      text-align: center;
+      color: #3a3a3a;
+      font-size: 12px;
+    }
+
+    footer a { color: #4a7aaa; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ═══════════════════════════════
+       Scroll reveal
+    ═══════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.on { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════
+       Responsive
+    ═══════════════════════════════ */
+    @media (max-width: 700px) {
+      #hero h1  { font-size: 38px; letter-spacing: -1px; }
+      .hero-subtitle { font-size: 16px; }
+      .stats-shelf { flex-direction: column; }
+      .stat-cell { border-right: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0 !important; border-bottom: none; }
+      .stat-cell:first-child { border-radius: 10px 10px 0 0 !important; }
+      .stat-cell:last-child  { border-radius: 0 0 10px 10px !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; }
+      .about-layout, .skills-cols, .projects-grid, .edu-row { grid-template-columns: 1fr; }
+      .skill-col + .skill-col, .edu-block + .edu-block { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+      .proj-tile { border-right: none; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">Miguel <strong>Jackson</strong></span>
+    <ul class="nav-links">
+      <li><a href="#about-row">About</a></li>
+      <li><a href="#exp-row">Experience</a></li>
+      <li><a href="#skills-row">Skills</a></li>
+      <li><a href="#projects-row">Projects</a></li>
+      <li><a href="#research-row">Research</a></li>
+      <li><a href="#edu-row">Education</a></li>
+      <li><a href="#contact-row">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <p class="hero-tagline">Business Analytics &nbsp;·&nbsp; Data Strategy &nbsp;·&nbsp; Financial Intelligence</p>
+  <h1>Miguel <strong>Jackson</strong></h1>
+  <p class="hero-subtitle">Turning raw data into decisions that matter.</p>
+  <p class="hero-summary">
+    Business Analytics professional with a background in financial and operational data analysis.
+    Experienced in SQL, Python, and Power BI — focused on delivering accurate, actionable insights.
+  </p>
+  <div>
+    <a href="#exp-row" class="btn-aqua btn-blue"><span>View My Work</span></a>
+    <a href="#contact-row" class="btn-aqua btn-dark"><span>Get In Touch</span></a>
+  </div>
+
+  <div class="stats-shelf">
+    <div class="stat-cell">
+      <div class="stat-num">$3K</div>
+      <div class="stat-lbl">Weekly overspend<br>recovered</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">$30M+</div>
+      <div class="stat-lbl">Capital budget<br>reported</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3+</div>
+      <div class="stat-lbl">Years industry<br>experience</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">MS</div>
+      <div class="stat-lbl">Business Analytics<br>St. John's Univ.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ ABOUT ═══════ -->
+<div class="row row-dark" id="about-row">
+  <div class="container reveal">
+    <p class="eyebrow">About</p>
+    <h2 class="section-h2">Analyst. Strategist. <strong>Problem Solver.</strong></h2>
+    <div class="about-layout">
+      <div class="about-text">
+        <p>
+          I'm a Business Analytics professional with a track record across corporate finance,
+          university operations, and hands-on small business management. I specialize in
+          finding where data breaks down — and fixing it.
+        </p>
+        <p>
+          At <strong>Bank of America Merrill Lynch</strong>, I queried large investment data sets to support
+          regulatory compliance and brokerage operations. At <strong>St. John's University</strong>, I built
+          Power BI dashboards and led independent feasibility studies. Today at <strong>Irie Diner</strong>,
+          I've restored financial data integrity and trimmed thousands in weekly waste.
+        </p>
+        <p>
+          I hold an M.S. in Business Analytics and a B.S. in Financial Economics — giving me a
+          foundation that bridges quantitative rigor with real business judgment.
+        </p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-pill">
+          <span class="pill-icon">📊</span>
+          <div class="pill-text">
+            <strong>Data Analysis & Visualization</strong>
+            <span>Power BI, Python, SQL, Excel</span>
+          </div>
+        </div>
+        <div class="highlight-pill">
+          <span class="pill-icon">💰</span>
+          <div class="pill-text">
+            <strong>Financial & Budget Analysis</strong>
+            <span>Cost basis, forecasting, budget reporting</span>
+          </div>
+        </div>
+        <div class="highlight-pill">
+          <span class="pill-icon">🔍</span>
+          <div class="pill-text">
+            <strong>Operational Data Integrity</strong>
+            <span>Data cleaning, audit, reconciliation</span>
+          </div>
+        </div>
+        <div class="highlight-pill">
+          <span class="pill-icon">📐</span>
+          <div class="pill-text">
+            <strong>Predictive Modelling</strong>
+            <span>Statistical methods, R, forecasting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════ EXPERIENCE ═══════ -->
+<div class="row row-darker" id="exp-row">
+  <div class="container reveal">
+    <p class="eyebrow">Experience</p>
+    <h2 class="section-h2">Where I've <strong>Made an Impact</strong></h2>
+    <p class="section-lead">Three distinct environments — a Fortune 500 bank, a major university, and an owner-operated restaurant — each requiring a different analytical lens.</p>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Data Manager</div>
+          <div class="exp-company">Irie Diner &nbsp;·&nbsp; Jacksonville, FL</div>
+          <div class="exp-location">Full-time</div>
+        </div>
+        <div class="exp-date">Sep 2025 — Present</div>
+      </div>
+      <ul class="exp-list">
+        <li>Identified and corrected a <strong>$3,000/week operational overspend</strong> by auditing sales and inventory data to align costs with a sustainable $9,000/week target.</li>
+        <li>Restored financial data integrity by cleaning years of historical duplicate entries that had significantly skewed performance metrics.</li>
+        <li>Partnered with the owner to re-engineer menu and beverage offerings, liquidating "dead cash" tied up in stagnant alcohol inventory.</li>
+        <li>Deliver weekly performance reports with actionable insights for menu planning and staffing based on accurate cash flow trends.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Data Analyst</div>
+          <div class="exp-company">St. John's University — Facilities &nbsp;·&nbsp; Queens, NY</div>
+          <div class="exp-location">Student Worker</div>
+        </div>
+        <div class="exp-date">Jun 2023 — May 2025</div>
+      </div>
+      <ul class="exp-list">
+        <li>Analyzed campus utility and facilities data to support budgeting, forecasting, and operational planning.</li>
+        <li>Assisted the department CPA to report on <strong>$30M+ capital</strong> and <strong>$3M+ insurance</strong> budgets.</li>
+        <li>Validated utility data entry to ensure accurate, on-time payments and billing reconciliation.</li>
+      </ul>
+      <div class="exp-sublabel">Independent Projects</div>
+      <ul class="exp-list">
+        <li>Built a <strong>real-time Power BI dashboard prototype</strong> to improve facilities reporting workflows.</li>
+        <li>Used SQL and spreadsheet analysis to explore and validate operational data sets.</li>
+        <li>Led a solar energy investment analysis — financial models shared with university stakeholders.</li>
+        <li>Conducted a feasibility study for hosting a <strong>FIFA 2026 Team Base Camp</strong>, focusing on financial impact.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Financial Analyst</div>
+          <div class="exp-company">Bank of America Merrill Lynch &nbsp;·&nbsp; Jacksonville, FL</div>
+          <div class="exp-location">Contract via Canon Recruiting</div>
+        </div>
+        <div class="exp-date">Aug 2022 — Jun 2023</div>
+      </div>
+      <ul class="exp-list">
+        <li>Utilized SQL to query extensive data sets, facilitating investment decisions and regulatory compliance.</li>
+        <li>Leveraged cost basis analysis and client securities expertise to generate branch and brokerage reports.</li>
+        <li>Analyzed complex investment requests: Date of Death Step-ups, Cost Basis Inquiries, Corporate Actions, and Capital Changes.</li>
+        <li>Collaborated with Financial Advisors to guarantee accurate tax reporting of cost basis and acquisition dates.</li>
+        <li>Identified process inefficiencies and executed strategies to enhance operational effectiveness.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════ SKILLS ═══════ -->
+<div class="row row-dark" id="skills-row">
+  <div class="container reveal">
+    <p class="eyebrow">Skills</p>
+    <h2 class="section-h2">Tools &amp; <strong>Expertise</strong></h2>
+    <p class="section-lead">A full stack of technical, analytical, and business skills — developed across finance, operations, and academic research.</p>
+
+    <div class="skills-cols">
+      <div class="skill-col">
+        <div class="skill-col-title">Technical</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">BigQuery</span>
+          <span class="skill-tag">Data Modeling</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <div class="skill-col-title">Analytical</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Data Mining</span>
+          <span class="skill-tag">Statistical Methods</span>
+          <span class="skill-tag">Forecasting</span>
+          <span class="skill-tag">Predictive Modelling</span>
+          <span class="skill-tag">Quantitative Reasoning</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <div class="skill-col-title">Professional</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Project Management</span>
+          <span class="skill-tag">Strategic Planning</span>
+          <span class="skill-tag">Sustainability Economics</span>
+          <span class="skill-tag">Financial Analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════ PROJECTS ═══════ -->
+<div class="row row-blue" id="projects-row">
+  <div class="container reveal">
+    <p class="eyebrow">Projects</p>
+    <h2 class="section-h2">Selected <strong>Work</strong></h2>
+    <p class="section-lead">Highlights from independent research, dashboards, and financial studies.</p>
+
+    <div class="projects-grid">
+      <div class="proj-tile">
+        <span class="proj-glyph">📊</span>
+        <div class="proj-name">Power BI Facilities Dashboard</div>
+        <div class="proj-desc">
+          Real-time reporting prototype for St. John's University Facilities, replacing manual
+          workflows with live operational data and automated insights.
+        </div>
+      </div>
+      <div class="proj-tile">
+        <span class="proj-glyph">☀️</span>
+        <div class="proj-name">Solar Energy Investment Analysis</div>
+        <div class="proj-desc">
+          Financial models for a university solar investment study — combining ROI projections
+          with sustainability metrics, shared with senior stakeholders.
+        </div>
+      </div>
+      <div class="proj-tile">
+        <span class="proj-glyph">⚽</span>
+        <div class="proj-name">FIFA 2026 Base Camp Feasibility</div>
+        <div class="proj-desc">
+          Full financial feasibility study for hosting a FIFA 2026 Team Base Camp — modeling
+          revenue, cost, and operational impact scenarios.
+        </div>
+      </div>
+      <div class="proj-tile">
+        <span class="proj-glyph">🍽️</span>
+        <div class="proj-name">Restaurant Operations Analytics</div>
+        <div class="proj-desc">
+          Audited and restructured financial data for Irie Diner — identifying $3K/week overspend,
+          cleaning years of history, and delivering weekly executive reports.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════ RESEARCH ═══════ -->
+<div class="row row-blue" id="research-row">
+  <div class="container reveal">
+    <p class="eyebrow">Research</p>
+    <h2 class="section-h2">Independent <strong>Research</strong></h2>
+    <p class="section-lead">An original causal inference study applying econometric methods to elite sport — currently in development.</p>
+
+    <div class="research-card">
+      <div class="research-badge">In Progress</div>
+
+      <div class="research-title">The Causal Impact of Managerial Stability on Elite Football Performance</div>
+      <div class="research-subtitle">A Synthetic Control Approach to the Post-Ferguson Era</div>
+
+      <p class="research-abstract">
+        This study transitions from descriptive analysis to causal inference, utilizing the
+        <strong style="color:#c8e0f0;">Synthetic Control Method (SCM)</strong> to quantify the
+        performance deficit resulting from organizational instability following a major leadership
+        transition. By constructing a weighted counterfactual from a donor pool of comparable
+        European clubs, the research isolates the causal effect of managerial turnover — independent
+        of transfer spending, squad quality, and market conditions.
+      </p>
+
+      <div class="research-cols">
+        <div class="research-col">
+          <div class="rc-label">Methodology</div>
+          <div class="rc-value">Synthetic Control Method (SCM)<br>Advanced xG &amp; xA metrics<br>Placebo testing, 2017–2024</div>
+        </div>
+        <div class="research-col">
+          <div class="rc-label">Key Metrics</div>
+          <div class="rc-value">Spending Efficiency Ratio (SER)<br>Performance Variance (σ²)<br>Possession &amp; Passing Accuracy</div>
+        </div>
+        <div class="research-col">
+          <div class="rc-label">Theoretical Basis</div>
+          <div class="rc-value">Succession theory<br>Scapegoat vs. Vicious-Circle<br>Sports Economics literature</div>
+        </div>
+      </div>
+
+      <div class="rc-label" style="margin-bottom:10px;">Core Equations</div>
+
+      <div class="eq-block">
+        <div class="eq-label">Synthetic Control Treatment Effect</div>
+        <div class="eq-render" id="eq1"></div>
+      </div>
+
+      <div class="eq-block">
+        <div class="eq-label">Spending Efficiency Ratio</div>
+        <div class="eq-render" id="eq2"></div>
+      </div>
+
+      <div class="eq-block">
+        <div class="eq-label">Performance Variance</div>
+        <div class="eq-render" id="eq3"></div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <div class="rc-label" style="margin-bottom:10px;">Methods &amp; Tools</div>
+        <div class="research-methods">
+          <span class="method-tag">Causal Inference</span>
+          <span class="method-tag">Synthetic Control</span>
+          <span class="method-tag">Diff-in-Differences</span>
+          <span class="method-tag">Expected Goals (xG)</span>
+          <span class="method-tag">Expected Assists (xA)</span>
+          <span class="method-tag">Counterfactual Analysis</span>
+          <span class="method-tag">Sports Economics</span>
+          <span class="method-tag">R / Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════ EDUCATION ═══════ -->
+<div class="row row-dark" id="edu-row">
+  <div class="container reveal">
+    <p class="eyebrow">Education</p>
+    <h2 class="section-h2">Academic <strong>Background</strong></h2>
+    <p class="section-lead">A graduate degree in Business Analytics on top of a quantitative economics foundation.</p>
+
+    <div class="edu-row">
+      <div class="edu-block">
+        <div class="edu-deg">Master of Science — Business Analytics</div>
+        <div class="edu-sch">St. John's University</div>
+        <div class="edu-meta">Queens, NY &nbsp;·&nbsp; May 2025</div>
+      </div>
+      <div class="edu-block">
+        <div class="edu-deg">Bachelor of Science — Financial Economics</div>
+        <div class="edu-sch">Caldwell University</div>
+        <div class="edu-meta">Caldwell, NJ &nbsp;·&nbsp; May 2022</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════ CONTACT ═══════ -->
+<div id="contact-row">
+  <div class="container">
+    <p class="eyebrow" style="text-align:center;">Contact</p>
+    <h2 class="section-h2" style="text-align:center; margin-bottom:8px;">Open to <strong>New Opportunities</strong></h2>
+    <p style="text-align:center; color:#4a6a80; font-size:14px; max-width:480px; margin:0 auto;">
+      Interested in data analytics, business intelligence, or financial analysis roles.
+    </p>
+    <div class="contact-cards">
+      <a href="mailto:ricardompjackson@outlook.com" class="contact-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        ricardompjackson@outlook.com
+      </a>
+      <a href="tel:9046849495" class="contact-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        904-684-9495
+      </a>
+      <a href="https://linkedin.com/in/miguel-jackson-228891170" target="_blank" rel="noopener" class="contact-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+        LinkedIn Profile
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Copyright &copy; 2025 Miguel Jackson &nbsp;|&nbsp; <a href="mailto:ricardompjackson@outlook.com">ricardompjackson@outlook.com</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script>
+  katex.render("\\alpha_{1t} = Y_{1t} - \\sum_j w_j Y_{jt}", document.getElementById("eq1"), { displayMode: true, throwOnError: false });
+  katex.render("\\text{SER} = \\frac{\\Delta\\text{ Points}}{\\text{Total Transfer Spending}}", document.getElementById("eq2"), { displayMode: true, throwOnError: false });
+  katex.render("\\sigma^2 = \\frac{\\sum (X - \\mu)^2}{n}", document.getElementById("eq3"), { displayMode: true, throwOnError: false });
+</script>
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.05}s`;
+    obs.observe(el);
+  });
+</script>
+
+</body>
+</html>
