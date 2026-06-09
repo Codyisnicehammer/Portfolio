@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miguel Jackson — Business Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --white:   #ffffff;
+      --off:     #f7f6f3;
+      --ink:     #111111;
+      --ink2:    #333333;
+      --muted:   #666666;
+      --rule:    #e2e0db;
+      --green:   #1a5c38;
+      --green-l: #e8f2ec;
+      --teal:    #0d7a5f;
+      --tag-bg:  #f0eeea;
+      --card-bg: #faf9f7;
+      --max:     1080px;
+      --font:    'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html.dark {
+      --white:   #141414;
+      --off:     #1c1c1c;
+      --ink:     #f0ede8;
+      --ink2:    #c8c4bc;
+      --muted:   #7a7670;
+      --rule:    #2a2a2a;
+      --green:   #4ead74;
+      --green-l: #1a2e22;
+      --tag-bg:  #222222;
+      --card-bg: #1a1a1a;
+    }
+
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ════════════════════════
+       NAV
+    ════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+    }
+
+    .nav-logo span {
+      color: var(--green);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0;
+    }
+
+    .nav-links a {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 14px;
+      height: 60px;
+      line-height: 60px;
+      border-left: 1px solid transparent;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ════════════════════════
+       HERO
+    ════════════════════════ */
+    #hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 80px 2rem 72px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 28px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    #hero h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -2.5px;
+      line-height: 1.03;
+      color: var(--ink);
+      max-width: 780px;
+      margin-bottom: 28px;
+    }
+
+    #hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .arrow-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      border-bottom: 1.5px solid var(--green);
+      padding-bottom: 1px;
+      transition: gap 0.2s;
+    }
+
+    .arrow-link:hover { gap: 14px; }
+    .arrow-link .arr { font-size: 16px; }
+
+    .plain-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .plain-link:hover { color: var(--ink); border-color: var(--ink2); }
+
+    /* ════════════════════════
+       STATS BAR
+    ════════════════════════ */
+    .stats-bar {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .stat {
+      padding: 36px 24px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-n {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-l {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ════════════════════════
+       SHARED SECTION STYLES
+    ════════════════════════ */
+    .section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 72px 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section:last-child { border-bottom: none; }
+
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .sec-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .sec-count {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    /* ════════════════════════
+       ABOUT
+    ════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-body p {
+      font-size: 16px;
+      color: var(--ink2);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+
+    .about-body strong { color: var(--ink); font-weight: 600; }
+
+    .about-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .about-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.15s;
+    }
+
+    .about-row:last-child { border-bottom: none; }
+    .about-row:hover { background: var(--green-l); }
+
+    .about-row-icon { font-size: 18px; flex-shrink: 0; }
+    .about-row-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .about-row-sub   { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+    /* ════════════════════════
+       EXPERIENCE
+    ════════════════════════ */
+    .exp-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .exp-card {
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .exp-card-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 16px;
+      padding: 24px 28px 20px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .exp-role {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .exp-company { font-size: 13px; font-weight: 500; color: var(--green); }
+    .exp-loc     { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .exp-badge {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--off);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+
+    .exp-card-body { padding: 20px 28px 24px; }
+
+    .exp-card-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .exp-card-body li {
+      font-size: 14px;
+      color: var(--ink2);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .exp-card-body li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: 12px;
+      top: 2px;
+    }
+
+    .exp-card-body li strong { color: var(--ink); font-weight: 600; }
+
+    .exp-sublabel {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 18px 0 8px;
+    }
+
+    /* ════════════════════════
+       SKILLS
+    ════════════════════════ */
+    .skills-table {
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skills-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .skills-row:last-child { border-bottom: none; }
+
+    .skills-cat {
+      padding: 22px 24px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--off);
+      border-right: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+    }
+
+    .skills-items {
+      padding: 18px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .skill-chip {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: var(--tag-bg);
+      border-radius: 3px;
+      padding: 5px 12px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .skill-chip:hover { background: var(--green-l); color: var(--green); }
+
+    /* ════════════════════════
+       PROJECTS
+    ════════════════════════ */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .proj-card {
+      background: var(--white);
+      padding: 32px 28px;
+      transition: background 0.15s;
+    }
+
+    .proj-card:hover { background: var(--card-bg); }
+
+    .proj-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .proj-name {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .proj-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .proj-arrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.03em;
+    }
+
+    /* ════════════════════════
+       RESEARCH
+    ════════════════════════ */
+    .research-wrap {
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .research-head {
+      padding: 28px 32px;
+      background: var(--ink);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .research-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 12px;
+    }
+
+    .research-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      color: var(--white);
+    }
+
+    .research-status {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: #a8f0c6;
+      border-radius: 20px;
+      padding: 5px 14px;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+
+    .research-body {
+      padding: 0;
+    }
+
+    .research-section {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .research-section:last-child { border-bottom: none; }
+
+    .rc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .rc-text {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.7;
+    }
+
+    .rc-text strong { color: var(--ink); font-weight: 600; }
+
+    .rc-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .rc-col-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .rc-col-body {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+
+    /* KaTeX equation block */
+    .eq-block {
+      padding: 16px 20px;
+      background: var(--off);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .eq-block:last-child { margin-bottom: 0; }
+
+    .eq-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .eq-render {
+      display: flex;
+      justify-content: center;
+    }
+
+    .eq-render .katex { font-size: 1.15em; }
+
+    /* ════════════════════════
+       EDUCATION
+    ════════════════════════ */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .edu-card {
+      background: var(--white);
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 28px; right: 28px;
+      height: 3px;
+      background: var(--green);
+      border-radius: 0 0 3px 3px;
+    }
+
+    .edu-year  { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--green); margin-bottom: 10px; }
+    .edu-deg   { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); margin-bottom: 6px; }
+    .edu-sch   { font-size: 14px; font-weight: 500; color: var(--ink2); }
+    .edu-loc   { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    /* ════════════════════════
+       CONTACT
+    ════════════════════════ */
+    #contact-section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 80px 2rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-head p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 16px;
+      max-width: 380px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+      color: var(--ink2);
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .contact-item:last-child { border-bottom: none; }
+    .contact-item:hover { background: var(--green-l); color: var(--green); }
+
+    .contact-item svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+    .contact-item:hover svg { color: var(--green); }
+
+    .ci-left { display: flex; align-items: center; gap: 12px; }
+    .ci-arr  { font-size: 14px; color: var(--muted); }
+    .contact-item:hover .ci-arr { color: var(--green); }
+
+    /* ════════════════════════
+       FOOTER
+    ════════════════════════ */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.35);
+      padding: 32px 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    footer a { color: rgba(255,255,255,0.5); }
+    footer a:hover { color: #fff; }
+
+    .footer-logo { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); }
+    .footer-logo span { color: #a8f0c6; }
+
+    /* ════════════════════════
+       SCROLL REVEAL
+    ════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.on { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════
+       DARK MODE TRANSITIONS
+    ════════════════════════ */
+    nav, .exp-card, .exp-card-head, .exp-card-body,
+    .about-row, .skills-table, .skills-cat, .skills-items,
+    .proj-grid, .proj-card, .edu-grid, .edu-card,
+    .research-wrap, .research-head, .research-section,
+    .contact-links, .contact-item, .eq-block,
+    .about-list, .stats-bar, .stat, footer {
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Dark mode footer override */
+    html.dark footer {
+      background: #0a0a0a;
+    }
+
+    html.dark .research-head {
+      background: #0d0d0d;
+    }
+
+    /* ── Nav mode toggle (small pill) ── */
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 5px 12px 5px 9px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.25s;
+      font-family: var(--font);
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .mode-toggle:hover { color: var(--ink); border-color: var(--ink2); }
+    .mode-toggle .toggle-icon { font-size: 13px; line-height: 1; }
+
+    /* ── Floating dark mode button ── */
+    .fab-mode {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--rule);
+      background: var(--white);
+      color: var(--ink);
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.25s ease, border-color 0.25s ease;
+      font-family: var(--font);
+    }
+
+    .fab-mode:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .fab-mode:active { transform: scale(0.94); }
+
+    /* ════════════════════════
+       RESPONSIVE
+    ════════════════════════ */
+    @media (max-width: 720px) {
+      #hero h1 { font-size: 38px; letter-spacing: -1.5px; }
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .stat:nth-child(2) { border-right: none; }
+      .about-grid, .rc-cols, .proj-grid,
+      .edu-grid, .contact-grid { grid-template-columns: 1fr; }
+      .skills-row { grid-template-columns: 1fr; }
+      .skills-cat { border-right: none; border-bottom: 1px solid var(--rule); }
+      .research-head { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .mode-toggle { display: flex; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ FLOATING DARK MODE BUTTON ═══ -->
+<button class="fab-mode" id="fabMode" aria-label="Toggle dark mode">☀️</button>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-wrap">
+    <span class="nav-logo">Miguel <span>Jackson</span></span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact-section">Contact</a></li>
+    </ul>
+    <button class="mode-toggle" id="modeToggle" aria-label="Toggle dark mode">
+      <span class="toggle-icon" id="toggleIcon">☀️</span>
+      <span id="toggleLabel">Light</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div id="hero">
+  <p class="hero-label">Business Analytics Professional</p>
+  <h1>Data that<br>drives <em>better</em><br>decisions.</h1>
+  <p class="hero-sub">
+    Experienced in financial analysis, operational data management, and building
+    tools that surface insights — using SQL, Python, Power BI, and more.
+  </p>
+  <div class="hero-actions">
+    <a href="#experience" class="arrow-link">View my work <span class="arr">→</span></a>
+    <a href="#contact-section" class="plain-link">Get in touch</a>
+  </div>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-n">$3K</div>
+    <div class="stat-l">Weekly overspend recovered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">$30M+</div>
+    <div class="stat-l">Capital budget reported</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">3+</div>
+    <div class="stat-l">Years industry experience</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">M.S.</div>
+    <div class="stat-l">Business Analytics, St. John's</div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="section reveal" id="about">
+  <div class="sec-header">
+    <div>
+      <p class="sec-label">About</p>
+      <h2 class="sec-title">Analyst. Strategist.<br>Problem Solver.</h2>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>
+        I'm a Business Analytics professional with a track record across corporate finance,
+        university operations, and hands-on small business management. I specialize in finding
+        where data breaks down — and fixing it.
+      </p>
+      <p>
+        At <strong>Bank of America Merrill Lynch</strong>, I queried large investment data sets to
+        support regulatory compliance and brokerage operations. At <strong>St. John's University</strong>,
+        I built Power BI dashboards and led independent feasibility studies. Today at
+        <strong>Irie Diner</strong>, I've restored financial data integrity and trimmed
+        thousands in weekly operational waste.
+      </p>
+      <p>
+        I hold an M.S. in Business Analytics and a B.S. in Financial Economics — a foundation
+        that bridges quantitative rigor with real business judgment.
+      </p>
+    </div>
+    <div class="about-list">
+      <div class="about-row">
+        <span class="about-row-icon">📊</span>
+        <div>
+          <div class="about-row-title">Data Analysis & Visualization</div>
+          <div class="about-row-sub">Power BI, Python, SQL, Excel</div>
+        </div>
+      </div>
+      <div class="about-row">
+        <span class="about-row-icon">💰</span>
+        <div>
+          <div class="about-row-title">Financial & Budget Analysis</div>
+          <div class="about-row-sub">Cost basis, forecasting, budget reporting</div>
+        </div>
+      </div>
+      <div class="about-row">
+        <span class="about-row-icon">🔍</span>
+        <div>
+          <div class="about-row-title">Operational Data Integrity</div>
+          <div class="about-row-sub">Data cleaning, audit, reconciliation</div>
+        </div>
+      </div>
+      <div class="about-row">
+        <span class="about-row-icon">📐</span>
+        <div>
+          <div class="about-row-title">Predictive Modelling</div>
+          <div class="about-row-sub">Statistical methods, R, forecasting</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<div class="section reveal" id="experience">
+  <div class="sec-header">
+    <div>
+      <p class="sec-label">Experience</p>
+      <h2 class="sec-title">Where I've Made<br>an Impact</h2>
+    </div>
+    <span class="sec-count">3 roles</span>
+  </div>
+
+  <div class="exp-list">
+    <div class="exp-card">
+      <div class="exp-card-head">
+        <div>
+          <div class="exp-role">Data Manager</div>
+          <div class="exp-company">Irie Diner</div>
+          <div class="exp-loc">Jacksonville, FL</div>
+        </div>
+        <span class="exp-badge">Sep 2025 — Present</span>
+      </div>
+      <div class="exp-card-body">
+        <ul>
+          <li>Identified and corrected a <strong>$3,000/week operational overspend</strong> by auditing sales and inventory data to align costs with a sustainable $9,000/week target.</li>
+          <li>Restored financial data integrity by cleaning years of historical duplicate entries that had significantly skewed performance metrics.</li>
+          <li>Partnered with the owner to re-engineer menu and beverage offerings, liquidating "dead cash" tied up in stagnant alcohol inventory.</li>
+          <li>Deliver weekly performance reports with actionable insights for menu planning and staffing based on accurate cash flow trends.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-head">
+        <div>
+          <div class="exp-role">Data Analyst</div>
+          <div class="exp-company">St. John's University — Facilities</div>
+          <div class="exp-loc">Queens, NY · Student Worker</div>
+        </div>
+        <span class="exp-badge">Jun 2023 — May 2025</span>
+      </div>
+      <div class="exp-card-body">
+        <ul>
+          <li>Analyzed campus utility and facilities data to support budgeting, forecasting, and operational planning.</li>
+          <li>Assisted the department CPA to report on <strong>$30M+ capital</strong> and <strong>$3M+ insurance</strong> budgets.</li>
+          <li>Validated utility data entry to ensure accurate, on-time payments and billing reconciliation.</li>
+        </ul>
+        <div class="exp-sublabel">Independent Projects</div>
+        <ul>
+          <li>Built a <strong>real-time Power BI dashboard prototype</strong> to improve facilities reporting workflows.</li>
+          <li>Used SQL and spreadsheet analysis to explore and validate operational data sets.</li>
+          <li>Led a solar energy investment analysis — financial models shared with university stakeholders.</li>
+          <li>Conducted a feasibility study for hosting a <strong>FIFA 2026 Team Base Camp</strong>, focusing on financial impact.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-head">
+        <div>
+          <div class="exp-role">Financial Analyst</div>
+          <div class="exp-company">Bank of America Merrill Lynch</div>
+          <div class="exp-loc">Jacksonville, FL · Contract via Canon Recruiting</div>
+        </div>
+        <span class="exp-badge">Aug 2022 — Jun 2023</span>
+      </div>
+      <div class="exp-card-body">
+        <ul>
+          <li>Utilized SQL to query extensive data sets, facilitating investment decisions and regulatory compliance.</li>
+          <li>Leveraged cost basis analysis and client securities expertise to generate branch and brokerage reports.</li>
+          <li>Analyzed complex investment requests: Date of Death Step-ups, Cost Basis Inquiries, Corporate Actions, and Capital Changes.</li>
+          <li>Collaborated with Financial Advisors to guarantee accurate tax reporting of cost basis and acquisition dates.</li>
+          <li>Identified process inefficiencies and executed strategies to enhance operational effectiveness.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SKILLS ═══ -->
+<div class="section reveal" id="skills">
+  <div class="sec-header">
+    <div>
+      <p class="sec-label">Skills</p>
+      <h2 class="sec-title">Tools &amp; Expertise</h2>
+    </div>
+  </div>
+  <div class="skills-table">
+    <div class="skills-row">
+      <div class="skills-cat">Technical</div>
+      <div class="skills-items">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">SQL</span>
+        <span class="skill-chip">R</span>
+        <span class="skill-chip">Excel</span>
+        <span class="skill-chip">Power BI</span>
+        <span class="skill-chip">BigQuery</span>
+        <span class="skill-chip">Data Modeling</span>
+      </div>
+    </div>
+    <div class="skills-row">
+      <div class="skills-cat">Analytical</div>
+      <div class="skills-items">
+        <span class="skill-chip">Data Mining</span>
+        <span class="skill-chip">Statistical Methods</span>
+        <span class="skill-chip">Forecasting</span>
+        <span class="skill-chip">Predictive Modelling</span>
+        <span class="skill-chip">Quantitative Reasoning</span>
+      </div>
+    </div>
+    <div class="skills-row">
+      <div class="skills-cat">Professional</div>
+      <div class="skills-items">
+        <span class="skill-chip">Project Management</span>
+        <span class="skill-chip">Strategic Planning</span>
+        <span class="skill-chip">Sustainability Economics</span>
+        <span class="skill-chip">Financial Analysis</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROJECTS ═══ -->
+<div class="section reveal" id="projects">
+  <div class="sec-header">
+    <div>
+      <p class="sec-label">Projects</p>
+      <h2 class="sec-title">Selected Work</h2>
+    </div>
+    <span class="sec-count">4 projects</span>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-num">01</div>
+      <div class="proj-name">Power BI Facilities Dashboard</div>
+      <div class="proj-desc">Real-time reporting prototype for St. John's University Facilities, replacing manual workflows with live operational insights and automated data flows.</div>
+      <div class="proj-arrow">View project →</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-num">02</div>
+      <div class="proj-name">Solar Energy Investment Analysis</div>
+      <div class="proj-desc">Financial models for a university solar investment study combining ROI projections with sustainability metrics, shared with senior stakeholders.</div>
+      <div class="proj-arrow">View project →</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-num">03</div>
+      <div class="proj-name">FIFA 2026 Base Camp Feasibility</div>
+      <div class="proj-desc">Full financial feasibility study for hosting a FIFA 2026 Team Base Camp — modeling revenue, cost, and operational impact scenarios for university leadership.</div>
+      <div class="proj-arrow">View project →</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-num">04</div>
+      <div class="proj-name">Restaurant Operations Analytics</div>
+      <div class="proj-desc">Audited and restructured financial data for Irie Diner — identifying $3K/week overspend, cleaning years of historical records, and delivering weekly executive reports.</div>
+      <div class="proj-arrow">View project →</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RESEARCH ═══ -->
+<div class="section reveal" id="research">
+  <div class="sec-header">
+    <div>
+      <p class="sec-label">Independent Research</p>
+      <h2 class="sec-title">Current Work</h2>
+    </div>
+    <span class="sec-count">In progress</span>
+  </div>
+
+  <div class="research-wrap">
+    <div class="research-head">
+      <div>
+        <span class="research-tag">Causal Inference · Sports Economics</span>
+        <div class="research-title">Does Transfer Market Spending<br>Translate to On-Pitch Performance?<br>A Synthetic Control Analysis.</div>
+      </div>
+      <div>
+        <div class="research-status">In Progress</div>
+      </div>
+    </div>
+
+    <div class="research-body">
+      <div class="research-section">
+        <div class="rc-label">Abstract</div>
+        <div class="rc-text">
+          This study applies <strong>synthetic control methodology</strong> and <strong>causal inference</strong> to examine
+          whether high-volume transfer market investment translates to measurable improvements in league
+          performance for top European football clubs. By constructing counterfactual club trajectories,
+          the analysis isolates the treatment effect of major spending windows — separating genuine
+          performance gains from confounding factors such as managerial changes, squad depth, and
+          competitive context.
+        </div>
+      </div>
+
+      <div class="research-section">
+        <div class="rc-cols">
+          <div>
+            <div class="rc-col-title">Methodology</div>
+            <div class="rc-col-body">Synthetic Control Method (SCM), Difference-in-Differences (DiD), panel data regression across 5 top European leagues over a 10-year window.</div>
+          </div>
+          <div>
+            <div class="rc-col-title">Data Sources</div>
+            <div class="rc-col-body">Transfermarkt transfer records, UEFA/league match outcome databases, squad valuation indices, and managerial tenure data.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="research-section">
+        <div class="rc-label">Core Equations</div>
+
+        <div class="eq-block">
+          <div class="eq-label">Synthetic Control Treatment Effect</div>
+          <div class="eq-render" id="eq1"></div>
+        </div>
+
+        <div class="eq-block">
+          <div class="eq-label">Spending Efficiency Ratio</div>
+          <div class="eq-render" id="eq2"></div>
+        </div>
+
+        <div class="eq-block">
+          <div class="eq-label">Performance Variance</div>
+          <div class="eq-render" id="eq3"></div>
+        </div>
+      </div>
+
+      <div class="research-section">
+        <div class="rc-label">Key Research Questions</div>
+        <div class="rc-text">
+          Does a club's league position improve significantly in the seasons following a major transfer
+          window? Is the Spending Efficiency Ratio a reliable predictor of sustained performance, or do
+          returns diminish beyond a spending threshold? How does managerial continuity moderate the
+          relationship between investment and results?
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EDUCATION ═══ -->
+<div class="section reveal" id="education">
+  <div class="sec-header">
+    <div>
+      <p class="sec-label">Education</p>
+      <h2 class="sec-title">Academic Background</h2>
+    </div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-year">May 2025</div>
+      <div class="edu-deg">Master of Science — Business Analytics</div>
+      <div class="edu-sch">St. John's University</div>
+      <div class="edu-loc">Queens, New York</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">May 2022</div>
+      <div class="edu-deg">Bachelor of Science — Financial Economics</div>
+      <div class="edu-sch">Caldwell University</div>
+      <div class="edu-loc">Caldwell, New Jersey</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div id="contact-section" class="reveal">
+  <div style="border-top: 1px solid var(--rule);">
+    <div class="section" style="border-bottom: none;">
+      <div class="contact-grid">
+        <div class="contact-head">
+          <p class="sec-label">Contact</p>
+          <h2 class="sec-title">Open to New<br>Opportunities</h2>
+          <p>Interested in data analytics, business intelligence, financial analysis, or research roles. Let's talk.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:ricardompjackson@outlook.com" class="contact-item">
+            <div class="ci-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              ricardompjackson@outlook.com
+            </div>
+            <span class="ci-arr">→</span>
+          </a>
+          <a href="tel:9046849495" class="contact-item">
+            <div class="ci-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              904-684-9495
+            </div>
+            <span class="ci-arr">→</span>
+          </a>
+          <a href="https://linkedin.com/in/miguel-jackson-228891170" target="_blank" rel="noopener" class="contact-item">
+            <div class="ci-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              linkedin.com/in/miguel-jackson-228891170
+            </div>
+            <span class="ci-arr">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <span class="footer-logo">Miguel <span>Jackson</span></span>
+  <span>© 2025 · Business Analytics Professional · Jacksonville, FL</span>
+  <a href="mailto:ricardompjackson@outlook.com">ricardompjackson@outlook.com</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script>
+  katex.render("\\alpha_{1t} = Y_{1t} - \\sum_j w_j Y_{jt}", document.getElementById("eq1"), { displayMode: true, throwOnError: false });
+  katex.render("\\text{SER} = \\frac{\\Delta\\text{ Points}}{\\text{Total Transfer Spending}}", document.getElementById("eq2"), { displayMode: true, throwOnError: false });
+  katex.render("\\sigma^2 = \\frac{\\sum (X - \\mu)^2}{n}", document.getElementById("eq3"), { displayMode: true, throwOnError: false });
+</script>
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<script>
+  const html  = document.documentElement;
+  const fab   = document.getElementById('fabMode');
+  const btn   = document.getElementById('modeToggle');
+  const icon  = document.getElementById('toggleIcon');
+  const label = document.getElementById('toggleLabel');
+
+  function applyMode(dark) {
+    html.classList.toggle('dark', dark);
+    fab.textContent   = dark ? '🌙' : '☀️';
+    icon.textContent  = dark ? '🌙' : '☀️';
+    label.textContent = dark ? 'Dark' : 'Light';
+  }
+
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyMode(saved ? saved === 'dark' : prefersDark);
+
+  function toggle() {
+    const nowDark = !html.classList.contains('dark');
+    applyMode(nowDark);
+    localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+  }
+
+  fab.addEventListener('click', toggle);
+  btn.addEventListener('click', toggle);
+</script>
+
+</body>
+</html>
